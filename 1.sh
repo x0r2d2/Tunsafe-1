@@ -19,6 +19,7 @@ echo "安装......"
     sudo make && sudo make install
 echo "开启路由转发"
     echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+    sysctl -w net.ipv6.conf.all.forwarding=1
     echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
     sysctl net.ipv4.tcp_available_congestion_control
     sudo echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
