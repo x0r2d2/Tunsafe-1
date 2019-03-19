@@ -68,6 +68,7 @@ AllowedIPs = 0.0.0.0/0, ::0/0
 PersistentKeepalive = 25
 EOF
 
+cat /etc/tunsafe/client.conf
 
 sudo cat > /etc/init.d/tunstart <<-EOF
 #! /bin/bash
