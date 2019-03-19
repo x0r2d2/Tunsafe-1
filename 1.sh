@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "更换国内源"
 echo "deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
 deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
@@ -10,19 +10,23 @@ deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
 deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse" > /etc/apt/sources.list
-    
-	sysctl_config
-	lsmod | grep bbr
-	apt-get update -y
+echo "开启BBR"
+    echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+    echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+    sysctl -p
+    sysctl net.ipv4.tcp_available_congestion_control
+echo "安装相关组件"
+    apt-get update -y
     sudo apt-get install -y git curl make rand clang-6.0 qrencode
+echo "安装......"
     git clone https://github.com/TunSafe/TunSafe.git
     cd TunSafe
     sudo make && sudo make install
-    
+echo "开启路由转发"
     sudo echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
     sysctl -p
     echo "1"> /proc/sys/net/ipv4/ip_forward
-    
+echo "配置"
     mkdir /etc/tunsafe
     cd /etc/tunsafe
     tunsafe genkey | tee sprivatekey | tunsafe pubkey > spublickey
@@ -32,7 +36,7 @@ deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted univ
     c1=$(cat cprivatekey)
     c2=$(cat cpublickey)
     serverip=$(curl ipv4.icanhazip.com)
-    port=$(rand 10000 60000)
+    port=65080
     eth=$(ls /sys/class/net | awk '/^e/{print}')
     obfsstr=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
 
@@ -67,8 +71,10 @@ Endpoint = tcp://$serverip:$port
 AllowedIPs = 0.0.0.0/0, ::0/0
 PersistentKeepalive = 25
 EOF
-
+echo "显示客户端配置"
+echo "==============================================="
 cat /etc/tunsafe/client.conf
+echo "==============================================="
 
 sudo cat > /etc/init.d/tunstart <<-EOF
 #! /bin/bash
@@ -79,5 +85,6 @@ EOF
     chmod +x /etc/init.d/tunstart
     cd /etc/init.d
     update-rc.d tunstart defaults
+echo "启动"
     cd /etc/tunsafe
     tunsafe start -d TunSafe.conf
