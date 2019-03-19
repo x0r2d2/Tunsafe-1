@@ -46,7 +46,7 @@ ObfuscateKey = $obfsstr
 ListenPortTCP = $port
 PostUp   = iptables -A FORWARD -i tun0 -j ACCEPT; iptables -A FORWARD -o tun0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $eth -j MASQUERADE
 PostDown = iptables -D FORWARD -i tun0 -j ACCEPT; iptables -D FORWARD -o tun0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $eth -j MASQUERADE
-DNS = 1.0.0.1,2606:4700:4700::1111
+DNS = 1.1.1.1,2606:4700:4700::1111
 MTU = 1420
 
 [Peer]
