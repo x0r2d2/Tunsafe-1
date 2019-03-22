@@ -1,4 +1,4 @@
-green "给新用户起个名字，不能和已有用户重复"
+echo "给新用户起个名字，不能和已有用户重复"
     read -p "请输入用户名：" newname
     cd /etc/tunsafe/
     cp client.conf $newname.conf
@@ -14,5 +14,5 @@ PublicKey = $(cat tempubkey)
 AllowedIPs = 10.0.0.$newnum/32
 EOF
     tunsafe set tun0 peer $(cat tempubkey) allowed-ips 10.0.0.$newnum/32
-    green "添加完成，文件：/etc/tunsafe/$newname.conf"
+    echo "添加完成，文件：/etc/tunsafe/$newname.conf"
     rm -f temprikey tempubkey
