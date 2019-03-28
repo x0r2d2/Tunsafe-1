@@ -1,15 +1,15 @@
 #!/bin/bash
-echo "更换国内源"
-echo "deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-backports main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-backports main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse" > /etc/apt/sources.list
+#echo "更换国内源"
+#echo "deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
+#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
+#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
+#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
+#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-backports main restricted universe multiverse
+#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-backports main restricted universe multiverse
+#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
+#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
+#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse
+#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse" > /etc/apt/sources.list
 echo "安装相关组件"
     apt-get update -y
     sudo apt-get install -y git curl make rand clang-6.0 qrencode
