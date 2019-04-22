@@ -17,13 +17,11 @@ echo "安装......"
     git clone https://github.com/TunSafe/TunSafe.git
     cd TunSafe
     sudo make && sudo make install
-echo "开启路由转发"
+echo "开启路由转发与BBR"
+    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.all.forwarding = 1" >> /etc/sysctl.conf
     echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
-    sysctl -w net.ipv6.conf.all.forwarding=1
     echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
-    sysctl net.ipv4.tcp_available_congestion_control
-    sudo echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
-    echo "1"> /proc/sys/net/ipv4/ip_forward
     sysctl -p
 echo "配置"
     mkdir /etc/tunsafe
