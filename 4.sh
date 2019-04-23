@@ -6,7 +6,7 @@ echo "给新用户起个名字，不能和已有用户重复"
     ipnum=$(grep Allowed /etc/tunsafe/TunSafe.conf | tail -1 | awk -F '[ ./]' '{print $6}')
     newnum=$((10#${ipnum}+1))
     sed -i 's%^PrivateKey.*$%'"PrivateKey = $(cat temprikey)"'%' $newname.conf
-    sed -i 's%^Address.*$%'"Address = 10.0.0.$newnum\/24"'%' $newname.conf
+    sed -i 's%^Address.*$%'"Address = 10.0.0.$newnum\/24,fd10:db31:203:ab31::$newnum\/64"'%' $newname.conf
 
 cat >> /etc/tunsafe/TunSafe.conf <<-EOF
 [Peer]
