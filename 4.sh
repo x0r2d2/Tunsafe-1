@@ -11,8 +11,8 @@ echo "给新用户起个名字，不能和已有用户重复"
 cat >> /etc/tunsafe/TunSafe.conf <<-EOF
 [Peer]
 PublicKey = $(cat tempubkey)
-AllowedIPs = 10.0.0.$newnum/32
+AllowedIPs = 10.0.0.$newnum/32,fd10:db31:203:ab31::$newnum/64
 EOF
-    tunsafe set tun0 peer $(cat tempubkey) allowed-ips 10.0.0.$newnum/32
+    tunsafe set tun0 peer $(cat tempubkey) allowed-ips 10.0.0.$newnum/32,fd10:db31:203:ab31::$newnum/64
     echo "添加完成，文件：/etc/tunsafe/$newname.conf"
     rm -f temprikey tempubkey
