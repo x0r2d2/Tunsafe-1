@@ -33,6 +33,7 @@ echo "配置"
     c1=$(cat cprivatekey)
     c2=$(cat cpublickey)
     serverip=$(curl ipv4.icanhazip.com)
+    obfsstr=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
     port=65080
     eth=$(ls /sys/class/net | awk '/^e/{print}')
 
@@ -40,6 +41,8 @@ sudo cat > /etc/tunsafe/TunSafe.conf <<-EOF
 [Interface]
 PrivateKey = $s1
 Address = 10.0.0.1/24,fd10:db31:203:ab31::1/64 
+ObfuscateKey = $obfsstr
+ObfuscateTCP=tls-chrome
 ListenPortTCP = $port
 PostUp   = iptables -A FORWARD -i tun0 -j ACCEPT; ip6tables -A FORWARD -i tun0 -j ACCEPT; iptables -A FORWARD -o tun0 -j ACCEPT; ip6tables -A FORWARD -o tun0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $eth -j MASQUERADE;ip6tables -t nat -A POSTROUTING -o $eth -j MASQUERADE
 PostDown = iptables -D FORWARD -i tun0 -j ACCEPT; ip6tables -D FORWARD -i tun0 -j ACCEPT; iptables -D FORWARD -o tun0 -j ACCEPT; ip6tables -D FORWARD -o tun0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $eth -j MASQUERADE;ip6tables -t nat -D POSTROUTING -o $eth -j MASQUERADE
