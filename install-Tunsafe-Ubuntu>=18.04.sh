@@ -33,7 +33,7 @@ echo "配置"
     c1=$(cat cprivatekey)
     c2=$(cat cpublickey)
     serverip=$(curl ipv4.icanhazip.com)
-    obfsstr=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
+    obfsstr=$(cat /dev/urandom | head -1 | md5sum | head -c 8)
     port=65080
     eth=$(ls /sys/class/net | awk '/^e/{print}')
 
@@ -53,6 +53,7 @@ MTU = 1420
 [Peer]
 PublicKey = $c2
 AllowedIPs = 10.0.0.2/32,fd10:db31:203:ab31::2/64
+Features=hybrid_tcp
 EOF
 
 
@@ -69,6 +70,7 @@ PublicKey = $s2
 Endpoint = tcp://$serverip:$port
 AllowedIPs = 0.0.0.0/0, ::0/0
 PersistentKeepalive = 25
+Features=hybrid_tcp
 EOF
 echo "显示客户端配置"
 echo "==============================================="
