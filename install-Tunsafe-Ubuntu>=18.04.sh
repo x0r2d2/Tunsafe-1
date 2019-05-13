@@ -60,6 +60,8 @@ sudo cat > /etc/tunsafe/client.conf <<-EOF
 [Interface]
 PrivateKey = $c1
 Address = 10.0.0.2/24,fd10:db31:203:ab31::2/64
+ObfuscateKey = $obfsstr
+ObfuscateTCP=tls-chrome
 BlockDNS = true
 DNS = 1.1.1.1,2606:4700:4700::1111
 MTU = 1420
