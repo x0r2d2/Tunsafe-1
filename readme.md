@@ -1,1 +1,1 @@
-一键安装和添加tunsaf
+一键安装和添加tunsafe
