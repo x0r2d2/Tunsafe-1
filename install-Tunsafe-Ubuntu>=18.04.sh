@@ -76,16 +76,7 @@ echo "显示客户端配置"
 echo "==============================================="
 cat /etc/tunsafe/client.conf
 echo "==============================================="
-
-sudo cat > /etc/init.d/tunstart <<-EOF
-#! /bin/bash
-cd /etc/tunsafe/
-tunsafe start -d TunSafe.conf
-EOF
-
-    chmod +x /etc/init.d/tunstart
-    cd /etc/init.d
-    update-rc.d tunstart defaults
+echo "开机自启"
+echo "tunsafe start -d /etc/tunsafe/TunSafe.conf" >> /etc/rc.local
 echo "启动"
-    cd /etc/tunsafe
-    tunsafe start -d TunSafe.conf
+tunsafe start -d /etc/tunsafe/TunSafe.conf
