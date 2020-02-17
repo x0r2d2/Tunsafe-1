@@ -1,18 +1,7 @@
 #!/bin/bash
-#echo "更换国内源"
-#echo "deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
-#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic main restricted universe multiverse
-#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
-#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-updates main restricted universe multiverse
-#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-backports main restricted universe multiverse
-#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-backports main restricted universe multiverse
-#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
-#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-security main restricted universe multiverse
-#deb https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse
-#deb-src https://mirrors.ustc.edu.cn/ubuntu/ cosmic-proposed main restricted universe multiverse" > /etc/apt/sources.list
 echo "安装相关组件"
-    apt-get update -y
-    sudo apt-get install -y git curl make rand clang-6.0 qrencode
+    apt update -y
+    apt- install -y git curl make rand clang-6.0 qrencode
 echo "安装......"
     git clone https://github.com/TunSafe/TunSafe.git
     cd TunSafe
@@ -34,42 +23,42 @@ echo "配置"
     c2=$(cat cpublickey)
     serverip=$(curl ipv4.icanhazip.com)
     obfsstr=$(cat /dev/urandom | head -1 | md5sum | head -c 8)
-    port=65080
+    port=443
     eth=$(ls /sys/class/net | awk '/^e/{print}')
 
 sudo cat > /etc/tunsafe/TunSafe.conf <<-EOF
 [Interface]
 PrivateKey = $s1
-Address = 10.0.0.1/24,fd10:db31:203:ab31::1/64 
+Address = 10.0.0.1/24
 ObfuscateKey = $obfsstr
 ObfuscateTCP=tls-chrome
 ListenPortTCP = $port
-PostUp   = iptables -A FORWARD -i tun0 -j ACCEPT; ip6tables -A FORWARD -i tun0 -j ACCEPT; iptables -A FORWARD -o tun0 -j ACCEPT; ip6tables -A FORWARD -o tun0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $eth -j MASQUERADE;ip6tables -t nat -A POSTROUTING -o $eth -j MASQUERADE
-PostDown = iptables -D FORWARD -i tun0 -j ACCEPT; ip6tables -D FORWARD -i tun0 -j ACCEPT; iptables -D FORWARD -o tun0 -j ACCEPT; ip6tables -D FORWARD -o tun0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $eth -j MASQUERADE;ip6tables -t nat -D POSTROUTING -o $eth -j MASQUERADE
+PostUp   = iptables -A FORWARD -i tun0 -j ACCEPT;iptables -A FORWARD -o tun0 -j ACCEPT;iptables -t nat -A POSTROUTING -o $eth -j MASQUERADE
+PostDown = iptables -D FORWARD -i tun0 -j ACCEPT;iptables -D FORWARD -o tun0 -j ACCEPT;iptables -t nat -D POSTROUTING -o $eth -j MASQUERADE
 BlockDNS = true
-DNS = 1.1.1.1,2606:4700:4700::1111
+DNS = 1.1.1.1
 MTU = 1420
 
 [Peer]
 PublicKey = $c2
-AllowedIPs = 10.0.0.2/32,fd10:db31:203:ab31::2/64
+AllowedIPs = 10.0.0.2/32
 EOF
 
 
 sudo cat > /etc/tunsafe/client.conf <<-EOF
 [Interface]
 PrivateKey = $c1
-Address = 10.0.0.2/24,fd10:db31:203:ab31::2/64
+Address = 10.0.0.2/24
 ObfuscateKey = $obfsstr
 ObfuscateTCP=tls-chrome
 BlockDNS = true
-DNS = 1.1.1.1,2606:4700:4700::1111
+DNS = 1.1.1.1
 MTU = 1420
 
 [Peer]
 PublicKey = $s2
 Endpoint = tcp://$serverip:$port
-AllowedIPs = 0.0.0.0/0, ::0/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 EOF
 echo "显示客户端配置"
