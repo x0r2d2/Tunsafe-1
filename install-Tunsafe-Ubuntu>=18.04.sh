@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "安装相关组件"
     apt update -y
-    apt- install -y git curl make rand clang-6.0 qrencode
+    apt install -y git curl make rand clang-6.0 qrencode
 echo "安装......"
     git clone https://github.com/TunSafe/TunSafe.git
     cd TunSafe
