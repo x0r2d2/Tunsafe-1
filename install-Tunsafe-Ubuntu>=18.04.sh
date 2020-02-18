@@ -5,7 +5,7 @@ echo "安装相关组件"
 echo "安装......"
     git clone https://github.com/TunSafe/TunSafe.git
     cd TunSafe
-    make && sudo make install
+    make && make install
 echo "开启路由转发与BBR"
     echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.all.forwarding = 1" >> /etc/sysctl.conf
